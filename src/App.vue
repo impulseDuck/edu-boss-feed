@@ -4,7 +4,7 @@
   </div>
 </template>
 <script >
-import request from './utils/request.js'
+import request from './utils/request.ts'
 // import Vue from 'vue'
 request({
   method: 'GET',
