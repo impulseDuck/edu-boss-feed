@@ -60,7 +60,7 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'aside',
+  name: 'LayoutAside',
   data () {
     return {
       isCollapse: true

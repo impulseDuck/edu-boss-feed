@@ -1,5 +1,6 @@
 /* 用户相关模块
 */
+import store from '@/store'
 import request from '@/utils/request.ts'
 import qs from 'qs'
 
@@ -15,5 +16,12 @@ export const login = (data: User) => {
     method: 'POST',
     // headers: { 'content-type': 'application/x-www-form-urlencoded' },
     data: qs.stringify(data)
+  })
+}
+export const getUserInfo = () => {
+  return request({
+    url: '/front/user/getInfo',
+    method: 'GET'
+    // headers: { Authorization: store.state.user.access_token }
   })
 }

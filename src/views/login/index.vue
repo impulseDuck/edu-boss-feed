@@ -59,16 +59,16 @@ export default Vue.extend({
             type: 'error',
             message: data.message
           })
-          this.$router.push({
-            path: '/',
-            name
-          })
         } else {
           this.$message({
             showClose: true,
             type: 'success',
             message: '登录成功'
           })
+          // 记录登录状态，状态能全局访问，放到vuex容器中
+          this.$store.commit('setUser', data.content)
+          // 成功跳转到首页
+          this.$router.push(this.$route.query.redirect as string || '/')
         }
         console.log(data)
         this.isLoginLoading = false

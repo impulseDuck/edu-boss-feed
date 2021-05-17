@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     component: Layout,
+    meta: { requiresAuth: true },
     children: [
       {
         path: '/',
@@ -65,6 +67,27 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   routes
+})
+
+// https://router.vuejs.org/zh/guide/advanced/meta.html 路由元信息
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // console.log('to', to)
+    // console.log('from', from)
+    // console.log('next', next)
+    if (!store.state.user) {
+      next({
+        name: 'login',
+        query: { // 通过url传递参数
+          redirect: to.fullPath // 登录成功要返回的页面告诉登录页面
+        }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
